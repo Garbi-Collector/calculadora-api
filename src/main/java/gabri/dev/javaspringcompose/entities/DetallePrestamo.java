@@ -20,9 +20,9 @@ public class DetallePrestamo {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "prestamo_id", nullable = false)
-    private Prestamos prestamo;
+    private Prestamo prestamo;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "replica_id", nullable = false)
-    private Replicas replicas;
+    private Replica replicas;
 }

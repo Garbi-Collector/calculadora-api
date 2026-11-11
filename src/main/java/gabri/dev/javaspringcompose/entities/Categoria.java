@@ -15,7 +15,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Categorias {
+public class Categoria {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,5 +25,5 @@ public class Categorias {
     private String categoria;
 
     @ManyToMany(mappedBy = "categorias", fetch = FetchType.LAZY)
-    private List<Libros> libros = new ArrayList<>();
+    private List<Libro> libros = new ArrayList<>();
 }

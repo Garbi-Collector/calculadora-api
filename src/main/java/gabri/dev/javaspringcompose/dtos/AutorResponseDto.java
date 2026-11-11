@@ -5,12 +5,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * Dto de entrada para crear o actualizar un autor.
+ * Dto de salida con los datos de un autor.
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class AutoresRequestDto {
+public class AutorResponseDto {
+    /**
+     * id del autor.
+     */
+    private Long id;
     /**
      * nombre del autor.
      */

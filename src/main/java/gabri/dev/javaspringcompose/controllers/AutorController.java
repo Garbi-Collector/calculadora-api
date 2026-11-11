@@ -1,20 +1,15 @@
 package gabri.dev.javaspringcompose.controllers;
 
-import gabri.dev.javaspringcompose.dtos.AutoresRequestDto;
-import gabri.dev.javaspringcompose.dtos.AutoresResponseDto;
-import gabri.dev.javaspringcompose.models.AutoresModel;
-import gabri.dev.javaspringcompose.services.AutoresService;
+import gabri.dev.javaspringcompose.dtos.AutorRequestDto;
+import gabri.dev.javaspringcompose.dtos.AutorResponseDto;
+import gabri.dev.javaspringcompose.models.AutorModel;
+import gabri.dev.javaspringcompose.services.AutorService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -25,12 +20,12 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/autores")
-public class AutoresController {
+public class AutorController {
 
     /**
      * Servicio de autores.
      */
-    private final AutoresService autoresService;
+    private final AutorService autoresService;
 
     /**
      * ModelMapper para convertir entre DTOs y modelos.
@@ -42,8 +37,8 @@ public class AutoresController {
      * @param autoresService servicio de autores.
      * @param modelMapper mapper por defecto.
      */
-    public AutoresController(AutoresService autoresService,
-                             @Qualifier("modelMapper") ModelMapper modelMapper) {
+    public AutorController(AutorService autoresService,
+                           @Qualifier("modelMapper") ModelMapper modelMapper) {
         this.autoresService = autoresService;
         this.modelMapper = modelMapper;
     }
@@ -53,14 +48,14 @@ public class AutoresController {
      * @return la lista de autores.
      */
     @GetMapping
-    public List<AutoresResponseDto> findAll() {
+    public List<AutorResponseDto> findAll() {
 
-        List<AutoresModel> autoresModel = autoresService.findAll();
+        List<AutorModel> autoresModel = autoresService.findAll();
 
-        List<AutoresResponseDto> autoresDto = new ArrayList<>();
+        List<AutorResponseDto> autoresDto = new ArrayList<>();
 
-        for(AutoresModel autoresModelfe : autoresModel) {
-            AutoresResponseDto autordto = new AutoresResponseDto();
+        for(AutorModel autoresModelfe : autoresModel) {
+            AutorResponseDto autordto = new AutorResponseDto();
             autordto.setId(autoresModelfe.getId());
             autordto.setNombre(autoresModelfe.getNombre());
             autordto.setNacionalidad(autoresModelfe.getApellido());
@@ -71,19 +66,19 @@ public class AutoresController {
     }
 
     @PostMapping
-    public AutoresResponseDto save(
-            @RequestBody AutoresRequestDto autoresDto
+    public AutorResponseDto save(
+            @RequestBody AutorRequestDto autoresDto
     ) {
         //crear el modelo de autores en base al dto que nos envian
-        AutoresModel autormodel = new AutoresModel();
+        AutorModel autormodel = new AutorModel();
         autormodel.setNombre(autoresDto.getNombre());
         autormodel.setApellido(autoresDto.getApellido());
         autormodel.setNacionalidad(autoresDto.getNacionalidad());
 
         //envia el modelo mapeado al metodo create del servicio
-        AutoresModel autorSaved = autoresService.create(autormodel);
+        AutorModel autorSaved = autoresService.create(autormodel);
 
-        AutoresResponseDto autordto = new AutoresResponseDto();
+        AutorResponseDto autordto = new AutorResponseDto();
         autordto.setId(autorSaved.getId());
         autordto.setNombre(autorSaved.getNombre());
         autordto.setApellido(autorSaved.getApellido());

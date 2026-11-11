@@ -1,20 +1,22 @@
-package gabri.dev.javaspringcompose.dtos;
+package gabri.dev.javaspringcompose.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * Dto de salida con los datos de un autor.
+ * Modelo de autor: representación de negocio, sin detalles de persistencia.
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class AutoresResponseDto {
+public class AutorModel {
+
     /**
-     * id del autor.
+     * identificador del autor
      */
     private Long id;
+
     /**
      * nombre del autor.
      */

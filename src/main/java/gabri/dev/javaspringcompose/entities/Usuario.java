@@ -15,7 +15,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Usuarios {
+public class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,5 +42,5 @@ public class Usuarios {
             cascade = CascadeType.PERSIST,
             fetch = FetchType.LAZY
     )
-    private List<Prestamos> prestamos = new ArrayList<>();
+    private List<Prestamo> prestamos = new ArrayList<>();
 }

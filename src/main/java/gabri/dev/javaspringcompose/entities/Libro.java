@@ -15,7 +15,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Libros {
+public class Libro {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,7 +36,7 @@ public class Libros {
             joinColumns = @JoinColumn(name = "libro_id"),
             inverseJoinColumns = @JoinColumn(name = "categoria_id")
     )
-    private List<Categorias> categorias = new ArrayList<>();
+    private List<Categoria> categorias = new ArrayList<>();
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
@@ -44,7 +44,7 @@ public class Libros {
             joinColumns = @JoinColumn(name = "libro_id"),
             inverseJoinColumns = @JoinColumn(name = "autor_id")
     )
-    private List<Autores> autores = new ArrayList<>();
+    private List<Autor> autores = new ArrayList<>();
 
     @OneToMany(
             mappedBy = "libros",
@@ -52,5 +52,5 @@ public class Libros {
             orphanRemoval = true,
             fetch = FetchType.LAZY
     )
-    private List<Replicas> replicas = new ArrayList<>();
+    private List<Replica> replicas = new ArrayList<>();
 }

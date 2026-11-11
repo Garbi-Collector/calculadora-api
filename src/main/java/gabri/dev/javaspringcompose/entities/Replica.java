@@ -16,7 +16,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Replicas {
+public class Replica {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,7 +27,7 @@ public class Replicas {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "libro_id", nullable = false)
-    private Libros libros;
+    private Libro libros;
 
     // Sin cascade: el historial de préstamos no debe borrarse con la réplica
     @OneToMany(mappedBy = "replicas", fetch = FetchType.LAZY)
