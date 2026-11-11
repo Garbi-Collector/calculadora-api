@@ -4,6 +4,7 @@ import gabri.dev.javaspringcompose.entities.Autor;
 import gabri.dev.javaspringcompose.models.AutorModel;
 import gabri.dev.javaspringcompose.repositories.AutorRepository;
 import gabri.dev.javaspringcompose.services.AutorService;
+import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -64,14 +65,7 @@ public class AutorServiceImpl implements AutorService {
         List<AutorModel> autoresmodeloList = new ArrayList<>();
 
         for(Autor autorEntidad : autoresList){
-
-            AutorModel autor = new AutorModel();
-
-            autor.setId(autorEntidad.getId());
-            autor.setNombre(autorEntidad.getNombre());
-            autor.setApellido(autorEntidad.getApellido());
-            autor.setNacionalidad(autorEntidad.getNacionalidad());
-
+            AutorModel autor = entityToModel(autorEntidad);
             autoresmodeloList.add(autor);
         }
         return autoresmodeloList;
@@ -84,7 +78,10 @@ public class AutorServiceImpl implements AutorService {
      */
     @Override
     public AutorModel findById(Long id) {
-        return null;
+        Autor autor = autoresRepository.findById(id).orElseThrow(
+                ()-> new EntityNotFoundException("Entidad no encontrada con ID: "+id));
+
+        return entityToModel(autor);
     }
 
     /**
@@ -94,19 +91,12 @@ public class AutorServiceImpl implements AutorService {
      */
     @Override
     public AutorModel create(AutorModel autorModel) {
-        Autor autorEntity = new Autor();
 
-        autorEntity.setNombre(autorModel.getNombre());
-        autorEntity.setApellido(autorModel.getApellido());
-        autorEntity.setNacionalidad(autorModel.getNacionalidad());
+        Autor autorEntity = modelToEntity(autorModel);
 
         Autor autorSaved = autoresRepository.save(autorEntity);
 
-        AutorModel autorSavedModel = new AutorModel();
-        autorSavedModel.setId(autorSaved.getId());
-        autorSavedModel.setNombre(autorSaved.getNombre());
-        autorSavedModel.setApellido(autorSaved.getApellido());
-        autorSavedModel.setNacionalidad(autorSaved.getNacionalidad());
+        AutorModel autorSavedModel = entityToModel(autorSaved);
 
         return autorSavedModel;
     }
@@ -134,6 +124,26 @@ public class AutorServiceImpl implements AutorService {
     /**
      * METODOS AUXILIARES
      */
+
+    private AutorModel entityToModel(Autor autorEntidad) {
+        AutorModel autorModel = new AutorModel();
+        autorModel.setId(autorEntidad.getId());
+        autorModel.setNombre(autorEntidad.getNombre());
+        autorModel.setApellido(autorEntidad.getApellido());
+        autorModel.setNacionalidad(autorEntidad.getNacionalidad());
+
+        return autorModel;
+    }
+    private Autor modelToEntity(AutorModel autorModel) {
+        Autor autorEntity = new Autor();
+        autorEntity.setId(autorModel.getId());
+        autorEntity.setNombre(autorModel.getNombre());
+        autorEntity.setApellido(autorModel.getApellido());
+        autorEntity.setNacionalidad(autorModel.getNacionalidad());
+
+        return autorEntity;
+    }
+
 
 
 

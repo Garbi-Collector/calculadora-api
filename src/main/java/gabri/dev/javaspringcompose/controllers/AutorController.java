@@ -6,11 +6,7 @@ import gabri.dev.javaspringcompose.models.AutorModel;
 import gabri.dev.javaspringcompose.services.AutorService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,26 +39,14 @@ public class AutorController {
         this.modelMapper = modelMapper;
     }
 
+
     /**
      * Lista todos los autores.
      * @return la lista de autores.
      */
     @GetMapping
-    public List<AutorResponseDto> findAll() {
-
-        List<AutorModel> autoresModel = autoresService.findAll();
-
-        List<AutorResponseDto> autoresDto = new ArrayList<>();
-
-        for(AutorModel autoresModelfe : autoresModel) {
-            AutorResponseDto autordto = new AutorResponseDto();
-            autordto.setId(autoresModelfe.getId());
-            autordto.setNombre(autoresModelfe.getNombre());
-            autordto.setNacionalidad(autoresModelfe.getApellido());
-            autordto.setNacionalidad(autoresModelfe.getNacionalidad());
-            autoresDto.add(autordto);
-        }
-        return autoresDto;
+    public AutorResponseDto findById(@RequestParam Long id) {
+        return modelToResponse(autoresService.findById(id));
     }
 
     @PostMapping
@@ -86,5 +70,45 @@ public class AutorController {
         return autordto;
 
     }
+
+
+    /**
+     * METODOS AUXILIARES
+     */
+
+    private AutorModel requestToModel(AutorRequestDto autorDto) {
+        AutorModel autorModel = new AutorModel();
+        autorModel.setNombre(autorDto.getNombre());
+        autorModel.setApellido(autorDto.getApellido());
+        autorModel.setNacionalidad(autorDto.getNacionalidad());
+        return autorModel;
+    }
+    private AutorModel responseToModel(AutorResponseDto autorDto) {
+        AutorModel autorModel = new AutorModel();
+        autorModel.setId(autorDto.getId());
+        autorModel.setNombre(autorDto.getNombre());
+        autorModel.setApellido(autorDto.getApellido());
+        autorModel.setNacionalidad(autorDto.getNacionalidad());
+        return autorModel;
+    }
+
+    private AutorRequestDto modelToRequest(AutorModel autorDto) {
+        AutorRequestDto autorRequest = new AutorRequestDto();
+        autorRequest.setNombre(autorDto.getNombre());
+        autorRequest.setApellido(autorDto.getApellido());
+        autorRequest.setNacionalidad(autorDto.getNacionalidad());
+
+        return autorRequest;
+    }
+    private AutorResponseDto modelToResponse(AutorModel autorDto) {
+        AutorResponseDto autorResponse = new AutorResponseDto();
+        autorResponse.setId(autorDto.getId());
+        autorResponse.setNombre(autorDto.getNombre());
+        autorResponse.setApellido(autorDto.getApellido());
+        autorResponse.setNacionalidad(autorDto.getNacionalidad());
+
+        return autorResponse;
+    }
+
 
 }
