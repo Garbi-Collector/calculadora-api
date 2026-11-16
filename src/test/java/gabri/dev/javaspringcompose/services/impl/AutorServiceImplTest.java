@@ -29,12 +29,6 @@ class AutorServiceImplTest {
     @Mock
     private AutorRepository autoresRepository;
 
-    @Mock
-    private ModelMapper modelMapper;
-
-    @Mock
-    private ModelMapper mergerMapper;
-
     @InjectMocks
     private AutorServiceImpl autorService;
 
@@ -42,7 +36,6 @@ class AutorServiceImplTest {
     /**
      * sector de testeos de los metodos PUBLICOS
      */
-
 
     @Test
     void findAll() {
