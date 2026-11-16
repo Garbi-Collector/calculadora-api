@@ -124,7 +124,8 @@ public class AutorServiceImpl implements AutorService {
      * @return
      */
     @Override
-    public boolean deleteById(Long id) {
+    public void deleteById(Long id) {
+        autoresRepository.deleteById(id);
     }
 
     /**

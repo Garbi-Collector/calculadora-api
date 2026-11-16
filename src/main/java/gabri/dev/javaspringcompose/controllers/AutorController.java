@@ -44,12 +44,20 @@ public class AutorController {
      * Lista todos los autores.
      * @return la lista de autores.
      */
-    @GetMapping
+    @GetMapping("/find-all")
+    public List<AutorResponseDto> findAll() {
+        return autoresService.findAll()
+                .stream()
+                .map(this::modelToResponse)
+                .toList();
+    }
+
+    @GetMapping("/find")
     public AutorResponseDto findById(@RequestParam Long id) {
         return modelToResponse(autoresService.findById(id));
     }
 
-    @PostMapping
+    @PostMapping("/save")
     public AutorResponseDto save(
             @RequestBody AutorRequestDto autoresDto
     ) {
@@ -69,6 +77,18 @@ public class AutorController {
         autordto.setNacionalidad(autorSaved.getNacionalidad());
         return autordto;
 
+    }
+
+    @PutMapping("/update")
+    public AutorResponseDto update(
+            @RequestBody AutorResponseDto autorDto
+    ) {
+        return modelToResponse(autoresService.update(responseToModel(autorDto)));
+    }
+
+    @DeleteMapping("/delete")
+    public void deleteById(@RequestParam Long id) {
+        autoresService.deleteById(id);
     }
 
 

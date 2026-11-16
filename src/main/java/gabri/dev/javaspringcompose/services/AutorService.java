@@ -21,7 +21,7 @@ public interface AutorService {
 
     AutorModel update(AutorModel autoresModel);
 
-    boolean deleteById(Long id);
+    void deleteById(Long id);
 
 
 }
