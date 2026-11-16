@@ -108,7 +108,14 @@ public class AutorServiceImpl implements AutorService {
      */
     @Override
     public AutorModel update(AutorModel autoresModel) {
-        return null;
+        Autor autorModificar = autoresRepository.findById(autoresModel.getId()).orElseThrow(
+                ()-> new EntityNotFoundException("Entidad no encontrada con ID: "+autoresModel.getId()));
+
+        autorModificar.setNombre(autoresModel.getNombre());
+        autorModificar.setApellido(autoresModel.getApellido());
+        autorModificar.setNacionalidad(autoresModel.getNacionalidad());
+
+        return entityToModel(autoresRepository.save(autorModificar));
     }
 
     /**
@@ -118,14 +125,6 @@ public class AutorServiceImpl implements AutorService {
      */
     @Override
     public boolean deleteById(Long id) {
-        if (!autoresRepository.existsById(id)) {
-            throw new EntityNotFoundException(
-                    "Entidad no encontrada con ID: " + id
-            );
-        }
-
-        autoresRepository.deleteById(id);
-        return true;
     }
 
     /**
