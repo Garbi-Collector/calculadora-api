@@ -118,7 +118,14 @@ public class AutorServiceImpl implements AutorService {
      */
     @Override
     public boolean deleteById(Long id) {
-        return false;
+        if (!autoresRepository.existsById(id)) {
+            throw new EntityNotFoundException(
+                    "Entidad no encontrada con ID: " + id
+            );
+        }
+
+        autoresRepository.deleteById(id);
+        return true;
     }
 
     /**
